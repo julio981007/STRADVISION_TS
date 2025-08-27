@@ -10,7 +10,7 @@ def generate_bounding_boxes_from_labels(point_cloud_path, label_file_path, targe
     포인트 클라우드와 라벨 파일로부터 특정 클래스의 3D 바운딩 박스를 생성하고 시각화합니다.
 
     :param point_cloud_path: 원본 .bin 파일 경로
-    :param label_file_path: 2DPASS 예측 결과 .label 파일 경로
+    :param label_file_path: 예측 결과 .label 파일 경로
     :param target_label: 바운딩 박스를 생성할 목표 클래스 ID (SemanticKITTI 'traffic-sign' = 81)
     :param eps: DBSCAN 군집화를 위한 이웃 탐색 거리
     :param min_samples: 하나의 군집을 구성하기 위한 최소 포인트 수
@@ -104,12 +104,14 @@ def generate_bounding_boxes_from_labels(point_cloud_path, label_file_path, targe
 
 
 if __name__ == '__main__':
+    root_dir = os.path.dirname(os.path.realpath(__file__))
+    
     # ArgumentParser를 사용하여 커맨드 라인에서 파일 경로를 쉽게 입력받음
     parser = argparse.ArgumentParser(description="Visualize 3D Bounding Boxes for Traffic Signs from 2DPASS predictions.")
     parser.add_argument('--pcd_file', type=str, help='Path to the .bin point cloud file.', 
-                        default='/home/julio981007/HDD/STRADVISION_sy/semantickitti/dataset/sequences/11/velodyne/000390.bin')
+                        default=f'sample_data/dataset/sequences/11/velodyne/000390.bin')
     parser.add_argument('--label_file', type=str, help='Path to the .label prediction file.', 
-                        default='/home/julio981007/HDD/STRADVISION_sy/subproblem1_lidar_only/LSK3DNet/output_skitti/sequences/11/predictions/000390.label')
+                        default=f'subproblem1_lidar_only/LSK3DNet/output_skitti/sequences/11/predictions/000390.label')
     
     # DBSCAN 파라미터도 조절 가능하게 추가
     parser.add_argument('--eps', type=float, default=0.75, help='DBSCAN epsilon parameter.')
@@ -119,8 +121,8 @@ if __name__ == '__main__':
 
     # 메인 함수 실행
     generate_bounding_boxes_from_labels(
-        point_cloud_path=args.pcd_file,
-        label_file_path=args.label_file,
+        point_cloud_path=os.path.join(root_dir, args.pcd_file),
+        label_file_path=os.path.join(root_dir, args.label_file),
         eps=args.eps,
         min_samples=args.min_samples
     )
