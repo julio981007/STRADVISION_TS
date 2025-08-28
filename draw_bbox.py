@@ -109,9 +109,9 @@ if __name__ == '__main__':
     # ArgumentParser를 사용하여 커맨드 라인에서 파일 경로를 쉽게 입력받음
     parser = argparse.ArgumentParser(description="Visualize 3D Bounding Boxes for Traffic Signs from 2DPASS predictions.")
     parser.add_argument('--pcd_file', type=str, help='Path to the .bin point cloud file.', 
-                        default=f'./semantickitti/dataset/sequences/11/velodyne/000340.bin')
+                        default=f'./semantickitti/dataset/sequences/11/velodyne/000327.bin')
     parser.add_argument('--label_file', type=str, help='Path to the .label prediction file.', 
-                        default=f'./subproblem2_lidar_camera/2DPASS/checkpoints/submit_2025_08_26/sequences/11/predictions/000340.label')
+                        default=f'./subproblem1_lidar_only/LSK3DNet/output_skitti/sequences/11/predictions/000327.label')
     '''
     subproblem1_lidar_only/LSK3DNet/output_skitti
     subproblem2_lidar_camera/2DPASS/checkpoints/submit_2025_08_26
