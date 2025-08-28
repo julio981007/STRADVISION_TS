@@ -31,7 +31,7 @@ LiDAR와 Camera 데이터를 함께 사용하기 위해 2DPASS 모델을 활용�
        ▼
 [데이터 로더 및 전처리]
        |
-       +--------------------+--------------------+
+       +--------------------+--------------------------+
        | (Problem 1: LiDAR) | (Problem 2: LiDAR-Camera)|
        ▼                                               ▼
 [LSK3DNet 모델]                                    [2DPASS 모델]
@@ -159,5 +159,5 @@ python draw_bbox.py --pcd_file <dir for the .bin point cloud file> --label_file 
 - Detection Head 추가   
 현재는 Segmentation 결과에 의존하므로, LSK3DNet 및 2DPASS의 Backbone 네트워크 위에 3D Bounding Box Regression을 수행하는 Detection Head를 추가하여 End-to-End 3D Object Detector로 발전시킬 수 있습니다.
 
-- Temporal 정보 활용   
+- Sequential 정보 활용   
 연속된 프레임(sequence) 정보를 활용하여 이전 프레임의 탐지 결과를 현재 프레임에 대한 Prior 정보로 사용하여 탐지의 일관성과 안정성을 높일 수 있습니다.
