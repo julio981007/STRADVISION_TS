@@ -155,6 +155,8 @@ python draw_bbox.py --pcd_file <dir for the .bin point cloud file> --label_file 
    - 결과 분석   
    2DPASS는 LSK3DNet(LiDAR-only)에 비해 더 안정적으로 교통 표지판을 탐지했습니다. 특히 LiDAR 포인트가 매우 희소한 원거리의 표지판도 이미지의 시맨틱 정보를 활용하여 성공적으로 분할해내는 것을 확인할 수 있었습니다. 이는 Fusion의 효과를 명확히 보여주는 결과입니다.
 
+<img src="fig/000340.png" width="40%" height="30%" title="px(픽셀) 크기 설정" alt="Raw img"></img>
+
 ## 개선 방안
 - Detection Head 추가   
 현재는 Segmentation 결과에 의존하므로, LSK3DNet 및 2DPASS의 Backbone 네트워크 위에 3D Bounding Box Regression을 수행하는 Detection Head를 추가하여 End-to-End 3D Object Detector로 발전시킬 수 있습니다.

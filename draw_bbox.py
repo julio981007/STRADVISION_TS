@@ -111,7 +111,7 @@ if __name__ == '__main__':
     parser.add_argument('--pcd_file', type=str, help='Path to the .bin point cloud file.', 
                         default=f'./semantickitti/dataset/sequences/11/velodyne/000340.bin')
     parser.add_argument('--label_file', type=str, help='Path to the .label prediction file.', 
-                        default=f'./subproblem2_lidar_camera/2DPASS/checkpoints/submit_2025_08_26/sequences/11/predictions/000340.label')
+                        default=f'./subproblem1_lidar_only/LSK3DNet/output_skitti/sequences/11/predictions/000340.label')
     '''
     subproblem1_lidar_only/LSK3DNet/output_skitti
     subproblem2_lidar_camera/2DPASS/checkpoints/submit_2025_08_26
