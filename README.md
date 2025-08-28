@@ -157,7 +157,7 @@ python draw_bbox.py --pcd_file <dir for the .bin point cloud file> --label_file 
 
 - 아래는 약 50m 거리의 교통 표지판에 대한 각 모델의 검출 결과 시각화
 <p align="center">
-    <img src="fig/000327.png" align="center" width="98%">
+    <img src="fig/000327.xcf" align="center" width="98%">
     <br>
     <img src="fig/LSK3DNet.png" align="center" width="49%">  
     <img src="fig/2DPASS.png" align="center" width="49%">
