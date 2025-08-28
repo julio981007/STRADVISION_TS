@@ -10,7 +10,7 @@ LiDAR-Camera based 3D Object Detection for Traffic Sign
 3. 개발 환경 및 의존성
 4. 프로젝트 실행 방법
 5. 세부 구현 내용
-6. 참고 논문 및 Repo
+6. 참고 논문 및 Repo   
 
-1. 프로젝트 소개
+\1. 프로젝트 소개
 --------------
