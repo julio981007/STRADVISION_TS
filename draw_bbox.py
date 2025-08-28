@@ -119,7 +119,7 @@ if __name__ == '__main__':
     
     # DBSCAN 파라미터도 조절 가능하게 추가
     parser.add_argument('--eps', type=float, default=0.75, help='DBSCAN epsilon parameter.')
-    parser.add_argument('--min_samples', type=int, default=15, help='DBSCAN min_samples parameter.')
+    parser.add_argument('--min_samples', type=int, default=5, help='DBSCAN min_samples parameter.')
 
     args = parser.parse_args()
 

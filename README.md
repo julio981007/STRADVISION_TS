@@ -133,7 +133,7 @@ python draw_bbox.py --pcd_file <dir for the .bin point cloud file> --label_file 
 
 3. 결과 분석
    - 결과 분석   
-   LSK3DNet은 교통 표지판으로 분류된 포인트들을 비교적 정확하게 예측했습니다. 하지만 포인트 클라우드의 희소성 때문에 멀리 있는 작은 표지판이나 일부가 가려진 표지판은 탐지하지 못하는 경우가 있었습니다.
+   LSK3DNet은 교통 표지판으로 분류된 포인트들을 비교적 정확하게 예측했습니다. 하지만 포인트 클라우드의 희소성 때문에 멀리 있는 작은 표지판은 탐지하지 못하는 경우가 있었습니다.
 
 ### 세부문제 2: LiDAR-Camera 3D Object Detection
 1. 모델 선택: [2DPASS](https://github.com/yanx27/2DPASS)
