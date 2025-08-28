@@ -21,3 +21,27 @@
 
 ## 아키텍처 다이어그램
 전체 시스템은 데이터 전처리 &rightarrow; 3D Semantic Segmentation &rightarrow; Bounding Box 생성 및 시각화의 3단계로 구성됩니다.
+
+```
+[SemanticKITTI 데이터셋]
+       |
+       ▼
+[데이터 로더 및 전처리]
+       |
+       +--------------------+--------------------+
+       | (Problem 1: LiDAR) | (Problem 2: Fusion)|
+       ▼                    ▼                    ▼
+[LSK3DNet 모델]         [2DPASS 모델]         [Camera 이미지]
+       |                    |                    |
+       ▼                    ▼                    |
+[Segmentation 결과 (Point Cloud)] <--+
+       |
+       ▼
+[draw_bbox.py]
+(Traffic Sign 클래스 필터링 및
+ Bounding Box 좌표 계산)
+       |
+       ▼
+[3D Bounding Box 시각화]
+(Open3D를 사용하여 원본 포인트 클라우드 위에 시각화)
+```
