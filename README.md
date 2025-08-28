@@ -160,6 +160,7 @@ python draw_bbox.py --pcd_file <dir for the .bin point cloud file> --label_file 
     <br>
     <img src="fig/LSK3DNet.png" align="center" width="49%">  
     <img src="fig/2DPASS.png" align="center" width="49%">
+    <br>
     <figcaption align="center">Raw image(Top) / LSK3DNet result(Bottom left) / 2DPASS(Bottom right)</figcaption>  
 </p>
 
