@@ -1,6 +1,6 @@
 # LiDAR-Camera based 3D Object Detection for Traffic Sign
 
-본 프로젝트는 자율주행 환경에서 LiDAR-Camera 센서 융합을 통해 교통 표지판(traffic sign) 객체를 3D로 검출하는 것을 목표로 하며, SemanticKITTI 데이터셋, 3D Semantic Segmentation 모델, 바운딩 박스 생성 및 시각화 코드를 활용한 실험 및 분석을 포함합니다.
+본 프로젝트는 자율주행 환경에서 LiDAR-Camera 센서 융합을 통해 교통 표지판(Traffic Sign) 객체를 3D로 검출하는 것을 목표로 하며, SemanticKITTI 데이터셋, 3D Semantic Segmentation 모델, 바운딩 박스 생성 및 시각화 코드를 활용한 실험 및 분석을 포함합니다.
 
 ## 목차
 - 프로젝트 개요
@@ -155,13 +155,14 @@ python draw_bbox.py --pcd_file <dir for the .bin point cloud file> --label_file 
    - 결과 분석   
    2DPASS는 LSK3DNet(LiDAR-only)에 비해 더 안정적으로 교통 표지판을 탐지했습니다. 특히 LiDAR 포인트가 매우 희소한 원거리의 표지판도 이미지의 시맨틱 정보를 활용하여 성공적으로 분할해내는 것을 확인할 수 있었습니다. 이는 Fusion의 효과를 명확히 보여주는 결과입니다.
 
-<p align="center">  
+- 아래는 약 39m 거리의 교통 표지판에 대한 각 모델의 검출 결과 시각화
+<p align="center">
     <img src="fig/000340.png" align="center" width="98%">
     <br>
     <img src="fig/LSK3DNet.png" align="center" width="49%">  
     <img src="fig/2DPASS.png" align="center" width="49%">
     <br>
-    <figcaption align="center">Raw image(Top) / LSK3DNet result(Bottom left) / 2DPASS(Bottom right)</figcaption>  
+    <figcaption align="center">Raw image(Top) / LSK3DNet LiDAR-only result(Bottom left) / 2DPASS LiDAR-Camera result(Bottom right)</figcaption>  
 </p>
 
 ## 개선 방안
