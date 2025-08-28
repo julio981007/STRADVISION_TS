@@ -8,6 +8,7 @@
 - 개발 환경 및 의존성
 - 프로젝트 실행 방법
 - 세부 구현 내용
+- 개선 방안
 
 ## 프로젝트 개요
 과제의 목표는 LiDAR 및 LiDAR-Camera 센서 데이터를 활용하여 SemanticKITTI 데이터셋 내의 '교통 표지판(Traffic Sign)' 객체를 3D로 검출하는 것입니다.
@@ -31,14 +32,14 @@ LiDAR와 Camera 데이터를 함께 사용하기 위해 2DPASS 모델을 활용�
 [데이터 로더 및 전처리]
        |
        +--------------------+--------------------+
-       | (Problem 1: LiDAR) | (Problem 2: Fusion)|
-       ▼                                         ▼
-[LSK3DNet 모델]                              [2DPASS 모델]
-       |                                         |
-       ▼                                         ▼
+       | (Problem 1: LiDAR) | (Problem 2: LiDAR-Camera)|
+       ▼                                               ▼
+[LSK3DNet 모델]                                    [2DPASS 모델]
+       |                                               |
+       ▼                                               ▼
 [Segmentation 결과 (Point Cloud)]
-       |                                         |
-       ▼                                         ▼
+       |                                               |
+       ▼                                               ▼
 [draw_bbox.py]
 (Traffic Sign 클래스 필터링 -> DBSCAN 클러스터링 -> 개별 Bounding Box 생성)
        |
@@ -87,25 +88,25 @@ conda env create -f requirements.yaml
 
 ### 사전 학습된 모델 가중치 다운로드
 - [LSK3DNet](https://github.com/FengZicai/LSK3DNet?tab=readme-ov-file#model-zoo)과 [2DPASS](https://github.com/yanx27/2DPASS?tab=readme-ov-file#model-zoo)의 공식 Github에서 pre-trained 모델 파일을 다운로드합니다.
-- 모델별 다운로드한 파일을 아래 경로에 위치시킵니다.
+- 모델별 다운로드한 파일을 아래 경로에 각각 위치시킵니다.
   - subproblem1_lidar_only/LSK3DNet/output_skitti
   - subproblem2_lidar_camera/2DPASS/checkpoints
 
 ### 추론 및 시각화 실행
 ```shell script
-# LSK3DNet으로 추론 실행
+# LSK3DNet 추론 실행
 # subproblem1_lidar_only/LSK3DNet/output_skitti/sequences 폴더 내 추론 결과 저장
 cd <subproblem1_lidar_only/LSK3DNet>
 CUDA_VISIBLE_DEVICES=0,1 python test_skitti.py | tee output_skitti/opensource_test.txt
 
-# 2DPASS로 추론 실행
-# subproblem2_lidar_camera/2DPASS/checkpoints/submit_{year}_{month}_{date} 폴더 내 추론 결과 저장
+# 2DPASS 추론 실행
+# subproblem2_lidar_camera/2DPASS/checkpoints/submit_{year_month_day}/sequences 폴더 내 추론 결과 저장
 cd <subproblem2_lidar_camera/2DPASS>
 python main.py --config config/2DPASS-semantickitti.yaml --gpu 0 --test --num_vote 12 --checkpoint checkpoints/best_model.ckpt --submit_to_server
 
 # 추론 결과 기반 시각화 실행
 cd <root dir of this repo>
-python draw_bbox.py
+python draw_bbox.py --pcd_file <dir for the .bin point cloud file> --label_file <dir for the .label prediction file>
 ```
 
 ## 세부 구현 내용

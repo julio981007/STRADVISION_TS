@@ -95,7 +95,6 @@ def generate_bounding_boxes_from_labels(point_cloud_path, label_file_path, targe
 
     # 시각화 목록에 원본과 바운딩 박스 추가
     geometries_to_visualize = [pcd_original, ego_pose_vis] + bounding_boxes
-    print(bounding_boxes)
     
     print("결과 시각화...")
     o3d.visualization.draw_geometries(geometries_to_visualize, 
@@ -110,9 +109,9 @@ if __name__ == '__main__':
     # ArgumentParser를 사용하여 커맨드 라인에서 파일 경로를 쉽게 입력받음
     parser = argparse.ArgumentParser(description="Visualize 3D Bounding Boxes for Traffic Signs from 2DPASS predictions.")
     parser.add_argument('--pcd_file', type=str, help='Path to the .bin point cloud file.', 
-                        default=f'semantickitti/dataset/sequences/11/velodyne/000340.bin')
+                        default=f'./semantickitti/dataset/sequences/11/velodyne/000340.bin')
     parser.add_argument('--label_file', type=str, help='Path to the .label prediction file.', 
-                        default=f'subproblem1_lidar_only/LSK3DNet/output_skitti/sequences/11/predictions/000340.label')
+                        default=f'./subproblem2_lidar_camera/2DPASS/checkpoints/submit_2025_08_26/sequences/11/predictions/000340.label')
     '''
     subproblem1_lidar_only/LSK3DNet/output_skitti
     subproblem2_lidar_camera/2DPASS/checkpoints/submit_2025_08_26
@@ -126,8 +125,8 @@ if __name__ == '__main__':
 
     # 메인 함수 실행
     generate_bounding_boxes_from_labels(
-        point_cloud_path=os.path.join(root_dir, args.pcd_file),
-        label_file_path=os.path.join(root_dir, args.label_file),
+        point_cloud_path=os.path.join(args.pcd_file),
+        label_file_path=os.path.join(args.label_file),
         eps=args.eps,
         min_samples=args.min_samples
     )
