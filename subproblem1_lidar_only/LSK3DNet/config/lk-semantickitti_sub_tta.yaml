@@ -78,7 +78,7 @@ dataset_params:
 
   val_data_loader:
     # data_path: "./dataset/SemanticKitti/sequences/"
-    data_path: "/home/julio981007/HDD/STRADVISION_sy/semantickitti/dataset/sequences/"
+    data_path: "../../semantickitti/dataset/sequences/"
     imageset: "test" # "val"
     rotate_aug: True
     flip_aug: True

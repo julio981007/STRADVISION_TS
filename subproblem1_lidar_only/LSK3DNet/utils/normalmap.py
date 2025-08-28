@@ -4,7 +4,7 @@
 # Brief: some utilities
 
 import sys
-sys.path.append('/home/julio981007/HDD/STRADVISION_sy/subproblem1_lidar_only/LSK3DNet/c_utils/build/')
+sys.path.append('./c_utils/build/')
 
 import os
 import math

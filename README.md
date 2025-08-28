@@ -94,12 +94,14 @@ conda env create -f requirements.yaml
 ### 추론 및 시각화 실행
 ```shell script
 # LSK3DNet으로 추론 실행
+# subproblem1_lidar_only/LSK3DNet/output_skitti/sequences 폴더 내 추론 결과 저장
 cd <subproblem1_lidar_only/LSK3DNet>
 CUDA_VISIBLE_DEVICES=0,1 python test_skitti.py | tee output_skitti/opensource_test.txt
 
 # 2DPASS로 추론 실행
+# subproblem2_lidar_camera/2DPASS/checkpoints/submit_{year}_{month}_{date} 폴더 내 추론 결과 저장
 cd <subproblem2_lidar_camera/2DPASS>
-python main.py --config config/2DPASS-semantickitti.yaml --gpu 0 --test --num_vote 12 --checkpoint <dir for the pytorch checkpoint>
+python main.py --config config/2DPASS-semantickitti.yaml --gpu 0 --test --num_vote 12 --checkpoint checkpoints/best_model.ckpt --submit_to_server
 
 # 추론 결과 기반 시각화 실행
 cd <root dir of this repo>
@@ -152,9 +154,9 @@ python draw_bbox.py
    - 결과 분석   
    2DPASS는 LSK3DNet(LiDAR-only)에 비해 더 안정적으로 교통 표지판을 탐지했습니다. 특히 LiDAR 포인트가 매우 희소한 원거리의 표지판도 이미지의 시맨틱 정보를 활용하여 성공적으로 분할해내는 것을 확인할 수 있었습니다. 이는 Fusion의 효과를 명확히 보여주는 결과입니다.
 
-## 개선 방안:
+## 개선 방안
 - Detection Head 추가   
-현재는 Segmentation 결과에 의존하므로, 2DPASS의 Backbone 네트워크 위에 3D Bounding Box Regression을 수행하는 Detection Head를 추가하여 End-to-End 3D Object Detector로 발전시킬 수 있습니다.
+현재는 Segmentation 결과에 의존하므로, LSK3DNet 및 2DPASS의 Backbone 네트워크 위에 3D Bounding Box Regression을 수행하는 Detection Head를 추가하여 End-to-End 3D Object Detector로 발전시킬 수 있습니다.
 
 - Temporal 정보 활용   
 연속된 프레임(sequence) 정보를 활용하여 이전 프레임의 탐지 결과를 현재 프레임에 대한 Prior 정보로 사용하여 탐지의 일관성과 안정성을 높일 수 있습니다.
