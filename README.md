@@ -157,6 +157,7 @@ python draw_bbox.py --pcd_file <dir for the .bin point cloud file> --label_file 
 
 <p align="center">  
     <img src="fig/000340.png" align="center" width="98%">
+    <figcaption align="right">Raw image</figcaption>
     <br>
     <img src="fig/LSK3DNet.png" align="center" width="49%">  
     <img src="fig/2DPASS.png" align="center" width="49%">  
