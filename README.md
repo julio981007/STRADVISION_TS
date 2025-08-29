@@ -20,7 +20,7 @@ LiDAR 포인트 클라우드만을 사용하여 객체를 탐지하기 위해 LS
 - 세부문제 2(LiDAR-Camera Fusion)   
 LiDAR와 Camera 데이터를 함께 사용하기 위해 2DPASS 모델을 활용했습니다.
 
-본 프로젝트에서는 사전 학습된(pre-trained) 모델을 파인튜닝이나 재학습 없이 그대로 사용했으며, Semantic Segmentation 결과를 기반으로 DBSCAN 클러스터링을 적용하여 개별 객체의 Bounding Box를 생성하는 후처리 과정에 집중했습니다.
+본 프로젝트에서는 사전 학습된(pre-trained) 모델을 파인튜닝이나 재학습 없이 그대로 사용했으며, 3D Semantic Segmentation 결과를 기반으로 DBSCAN 클러스터링을 적용하여 개별 객체의 Bounding Box를 생성하는 후처리 과정에 집중했습니다.
 
 ## 아키텍처 다이어그램
 전체 시스템은 데이터 전처리 &rightarrow; 3D Semantic Segmentation &rightarrow; Bounding Box 생성 및 시각화의 3단계로 구성됩니다.
@@ -121,7 +121,7 @@ python draw_bbox.py --pcd_file <dir for the .bin point cloud file> --label_file 
 
 2. 구현 내용
    - 모델 추론   
-   사전 학습된 LSK3DNet 모델에 포인트 클라우드 데이터를 입력하여 Semantic Segmentation을 수행합니다.
+   사전 학습된 LSK3DNet 모델에 포인트 클라우드 데이터를 입력하여 3D Semantic Segmentation을 수행합니다.
 
    - Bounding Box 생성(draw_bbox.py):
       -  Segmentation 결과에서 'traffic-sign' 클래스로 예측된 포인트들만 필터링합니다.
@@ -138,15 +138,16 @@ python draw_bbox.py --pcd_file <dir for the .bin point cloud file> --label_file 
 ### 세부문제 2: LiDAR-Camera 3D Object Detection
 1. 모델 선택: [2DPASS](https://github.com/yanx27/2DPASS)
    - 선택 이유:
-     - 2D-3D 양방향 정보 활용   
-     2DPASS는 2D 이미지의 풍부한 시맨틱 정보(색상, 질감 등)를 3D 포인트 클라우드 분할에 활용하고, 반대로 3D의 기하학적 정보를 2D 분할에 활용하는 양방향 정보 활용 구조를 가집니다. 이는 LiDAR만으로는 식별이 어려운 객체를 카메라 정보로 보완할 수 있게 해줍니다.
+     - 2D-3D 정보 활용   
+     2DPASS는 2D 이미지의 풍부한 시맨틱 정보(색상, 질감 등)를 3D 포인트 클라우드 분할에 활용하고, 반대로 3D의 기하학적 정보를 2D 분할에 활용하는 구조를 가집니다. 이는 LiDAR만으로는 식별이 어려운 객체를 카메라 정보로 보완할 수 있게 해줍니다.
     
-     - 효과적인 Fusion   
-     2D 이미지에서 얻은 특징을 3D 포인트에 투영(projection)하고 이를 기반으로 3D Segmentation을 수행하므로, 텍스트 정보가 중요한 교통 표지판 탐지에 매우 효과적일 것이라 판단했습니다.
+     - 지식 증류를 통한 의미 정보 내재화   
+     2DPASS는 학습 과정에서 카메라 좌표계와 LiDAR 좌표계를 일치시키는 투영(Projection)을 통해, 2D 이미지의 풍부한 시각적 특징과 3D 포인트 클라우드의 기하학적 특징을 정렬합니다. 이를 바탕으로, 색상이나 텍스트 같은 시각적 정보가 중요한 객체(예: 교통 표지판)의 지식을 3D 모델에 효과적으로 증류합니다.   
+     이 과정을 통해 3D 모델은 학습이 끝난 후, 실제 추론 시에는 카메라 이미지 없이 LiDAR 데이터만으로도 객체를 정교하게 인식하는 능력을 갖게 됩니다. 따라서 2DPASS는 추론 시 추가적인 연산 비용 없이, LiDAR만으로는 구분이 어려운 객체의 분할 성능을 크게 향상시킬 수 있을 것으로 판단했습니다.
 
 2. 구현 내용
    - 모델 추론   
-   사전 학습된 2DPASS 모델에 포인트 클라우드와 이미지를 함께 입력하여 3D Semantic Segmentation을 수행합니다.
+   사전 학습된 2DPASS 모델에 포인트 클라우드 데이터를 입력하여 3D Semantic Segmentation을 수행합니다.
 
    - Bouding Box 생성 및 시각화   
    LSK3DNet과 동일하게 draw_bbox.py 를 사용합니다. 'traffic-sign'으로 예측된 포인트들을 필터링한 후, DBSCAN 클러스터링을 통해 개별 객체로 분리하고 각 객체에 대한 Bounding Box를 생성하여 시각화합니다.
